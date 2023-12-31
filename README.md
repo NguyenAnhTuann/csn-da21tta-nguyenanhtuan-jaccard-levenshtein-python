@@ -12,7 +12,6 @@
 ```bash
 - Tìm hiểu và cài đặt thuật toán đánh giá sự tương đồng của văn bản sử dụng độ đo của Jaccard và Levenshtein.
 ```
- ```
 - Yêu Cầu:
 ```bash
 1. Tìm hiểu và cài đặt thuật toán Jaccard và Levenshtein.
