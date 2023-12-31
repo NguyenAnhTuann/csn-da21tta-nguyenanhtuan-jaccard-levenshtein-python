@@ -48,13 +48,13 @@
 
 1. Cài đặt yêu cầu:
     ```bash
-    Cài đặt thư viện Python.
+    - Cài đặt thư viện Python.
     ```
    ```bash
-    Cài đặt thư viện scikit-learn.
+   - Cài đặt thư viện scikit-learn.
    ``` 
    ```bash
-    Cài đặt thư viện Flask.
+   - Cài đặt thư viện Flask.
    ```
 ## Sử Dụng
 
