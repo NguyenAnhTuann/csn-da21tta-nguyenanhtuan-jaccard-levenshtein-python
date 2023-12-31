@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đánh giá sự tương đồng văn bản sử dụng hai độ đo Jaccard & Levenshtein</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        h1 {
+            color: #ffffff;
+            background-color: #7e7e7e;
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px 0px #000000;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px 0px #000000;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .result-label {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 25px;
+            color: #28a745;
+        }
+        .error-message {
+            color: red;
+            font-size: 45px;
+            margin-top: 5px;
+            text-align: center;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px 0px #000000;
+        }
+        button.btn-primary {
+            background-color: #0056b3;
+            border: 1px solid #0056b3;
+        }
+        button.btn-primary:hover {
+            background-color: #6c6c6c;
+            border: 1px solid #6c6c6c;
+        }
+        button.btn-danger {
+            background-color: #dc3545;
+            border: 1px solid #dc3545;
+        }
+        button.btn-danger:hover {
+            background-color: #c82333;
+            border: 1px solid #c82333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Đánh giá sự tương đồng văn bản sử dụng hai độ đo Jaccard & Levenshtein</h1>
+
+    <div class="form-group">
+        <label for="vanban_1">Văn bản 1:</label>
+        <textarea class="form-control" id="vanban_1" rows="6"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="vanban_2">Văn bản 2:</label>
+        <textarea class="form-control" id="vanban_2" rows="6"></textarea>
+    </div>
+
+    <button class="btn btn-primary" onclick="tinhdotuongdong_jaccard()">Tính độ tương đồng Jaccard</button>
+    <button class="btn btn-primary" onclick="tinhdotuongdong_levenshtein()">Tính độ tương đồng Levenshtein</button>
+
+    <div id="resultLabel" class="result-label"></div>
+
+    <div id="tugiongnhaulabel"></div>
+    <div id="tukhacnhau_vb1label"></div>
+    <div id="tukhacnhau_vb2label"></div>
+    <div id="diemkitulabel"></div>
+
+    <div class="form-group" id="tansuatxuathiencuatu">
+        <label for="tuxuathien">Kiểm tra tần suất xuất hiện của từ:</label>
+        <input type="text" class="form-control" id="tuxuathien">
+        <button class="btn btn-primary" onclick="kiemtrasolanxuathien()">Kiểm tra</button>
+    </div>
+
+    <div id="ketquatuxuathien"></div>
+
+    <div class="error-message" id="errorMessage"></div>
+
+    <button class="btn btn-danger" onclick="xoadulieu()">Xóa dữ liệu</button>
+</div>
+
+<script>
+    function tinhdotuongdong_jaccard() {
+        resetketqua();
+        var vanban_1 = document.getElementById('vanban_1').value.toLowerCase();
+        var vanban_2 = document.getElementById('vanban_2').value.toLowerCase();
+
+        if (!vanban_1.trim() || !vanban_2.trim()) {
+            document.getElementById('errorMessage').innerHTML = "Vui lòng nhập dữ liệu đầy đủ !!!";
+            return;
+        }
+
+        var taphop_a = new Set(vanban_1.split(' '));
+        var taphop_b = new Set(vanban_2.split(' '));
+
+        var phangiao_taphop = new Set([...taphop_a].filter(x => taphop_b.has(x)));
+        var phanhop_taphop = new Set([...taphop_a, ...taphop_b]);
+
+        var dotuongdong_jaccard = phangiao_taphop.size / phanhop_taphop.size;
+
+        document.getElementById('resultLabel').innerHTML = "Độ tương đồng Jaccard: " + dotuongdong_jaccard.toFixed(2);
+        document.getElementById('tugiongnhaulabel').innerHTML = "Số từ giống nhau: " + phangiao_taphop.size;
+        document.getElementById('tukhacnhau_vb1label').innerHTML = "Số từ khác nhau trong văn bản 1: " + (taphop_a.size - phangiao_taphop.size);
+        document.getElementById('tukhacnhau_vb2label').innerHTML = "Số từ khác nhau trong văn bản 2: " + (taphop_b.size - phangiao_taphop.size);
+    }
+
+    function tinhdotuongdong_levenshtein() {
+        resetketqua();
+
+        var vanban_1 = document.getElementById('vanban_1').value.toLowerCase();
+        var vanban_2 = document.getElementById('vanban_2').value.toLowerCase();
+
+        if (!vanban_1.trim() || !vanban_2.trim()) {
+            document.getElementById('errorMessage').innerHTML = "Vui lòng nhập dữ liệu đầy đủ !!!";
+            return;
+        }
+
+        function khoangcach_levenshtein(a, b) {
+            var dodai_vb1 = a.length;
+            var dodai_vb2 = b.length;
+
+            var dp = [...Array(dodai_vb1 + 1)].map(_ => Array(dodai_vb2 + 1).fill(0));
+
+            for (var i = 0; i <= dodai_vb1; i++) {
+                for (var j = 0; j <= dodai_vb2; j++) {
+                    if (i === 0) {
+                        dp[i][j] = j;
+                    } else if (j === 0) {
+                        dp[i][j] = i;
+                    } else {
+                        dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+                    }
+                }
+            }
+
+            return dp[dodai_vb1][dodai_vb2];
+        }
+
+        var khoangcach = khoangcach_levenshtein(vanban_1, vanban_2);
+        var chuoidainhat = Math.max(vanban_1.length, vanban_2.length);
+        var dotuongdong_levenshtein= 1 - khoangcach / chuoidainhat;
+
+        var diemkitulabel = "Số kí tự trong văn bản:<br>Văn bản 1: " + vanban_1.length + ", Văn bản 2: " + vanban_2.length;
+
+        var differentWordsA = vanban_1.split(' ').filter(value => !vanban_2.split(' ').includes(value)).length;
+        var differentWordsB = vanban_2.split(' ').filter(value => !vanban_1.split(' ').includes(value)).length;
+
+        document.getElementById('resultLabel').innerHTML = "Độ tương đồng Levenshtein: " + dotuongdong_levenshtein.toFixed(2);
+        document.getElementById('tugiongnhaulabel').innerHTML = "Số từ giống nhau: " + (vanban_1.split(' ').filter(value => vanban_2.split(' ').includes(value)).length);
+        document.getElementById('tukhacnhau_vb1label').innerHTML = "Số từ khác nhau trong văn bản 1: " + differentWordsA;
+        document.getElementById('tukhacnhau_vb2label').innerHTML = "Số từ khác nhau trong văn bản 2: " + differentWordsB;
+        document.getElementById('diemkitulabel').innerHTML = diemkitulabel;
+    }
+
+    function kiemtrasolanxuathien() {
+        resetketqua();
+        var tucankiemtra = document.getElementById('tuxuathien').value.toLowerCase();
+        var vanban_1 = document.getElementById('vanban_1').value.toLowerCase();
+        var vanban_2 = document.getElementById('vanban_2').value.toLowerCase();
+
+        if (!vanban_1.trim() || !vanban_2.trim() || !tucankiemtra.trim()) {
+            document.getElementById('errorMessage').innerHTML = "Vui lòng nhập dữ liệu đầy đủ !!!";
+            return;
+        }
+
+        var diem_vb1 = vanban_1.split(' ').filter(value => value === tucankiemtra).length;
+        var diem_vb2 = vanban_2.split(' ').filter(value => value === tucankiemtra).length;
+
+        document.getElementById('ketquatuxuathien').innerHTML = "Số lần từ '" + tucankiemtra + "' xuất hiện:<br>Văn bản 1: " + diem_vb1 + ", Văn bản 2: " + diem_vb2;
+    }
+
+    function xoadulieu() {
+        document.getElementById('vanban_1').value = "";
+        document.getElementById('vanban_2').value = "";
+        resetketqua();
+    }
+
+    function resetketqua() {
+        document.getElementById('resultLabel').innerHTML = "";
+        document.getElementById('tugiongnhaulabel').innerHTML = "";
+        document.getElementById('tukhacnhau_vb1label').innerHTML = "";
+        document.getElementById('tukhacnhau_vb2label').innerHTML = "";
+        document.getElementById('ketquatuxuathien').innerHTML = "";
+        document.getElementById('diemkitulabel').innerHTML = "";
+        document.getElementById('errorMessage').innerHTML = "";
+    }
+</script>
+
+</body>
+</html>
