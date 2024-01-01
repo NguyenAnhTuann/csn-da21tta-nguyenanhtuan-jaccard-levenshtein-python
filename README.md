@@ -76,4 +76,4 @@ JavaScript
 
 - Gmail: 110121123@st.tvu.edu.vn
 - Zalo: 0869094929
-- [FACEBOOK](https://www.facebook.com/NguyenAnhTuxn)
+- [Facebook](https://www.facebook.com/NguyenAnhTuxn)
