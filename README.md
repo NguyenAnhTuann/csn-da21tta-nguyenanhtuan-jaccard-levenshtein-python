@@ -31,7 +31,7 @@
 3.	Sau khi cài đặt và thử nghiệm sẽ hiểu rõ nguyên lí hoạt động của 2 thuật toán ta lựa chọn thuật toán phù hợp để làm việc.
 ```
 
-![Ảnh minh họa dự án](https://www.python.org/static/community_logos/python-logo.png)
+![Ảnh minh họa dự án](https://bkacad.edu.vn/images/news/olds/rzr1584507713.jpg)
 
 ## Mục lục
 - [Lịch Trình Thực Hiện](#lịch-trình-thực-hiện)
