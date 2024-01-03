@@ -30,9 +30,6 @@
 2.	Nhận xét xem thuật toán nào đánh giá sự tương đồng văn bản chính xác hơn.
 3.	Sau khi cài đặt và thử nghiệm sẽ hiểu rõ nguyên lí hoạt động của 2 thuật toán ta lựa chọn thuật toán phù hợp để làm việc.
 ```
-
-![Ảnh minh họa dự án](https://bkacad.edu.vn/images/news/olds/rzr1584507713.jpg)
-
 ## Mục lục
 - [Lịch Trình Thực Hiện](#lịch-trình-thực-hiện)
 - [Cài Đặt](#cài-đặt)
