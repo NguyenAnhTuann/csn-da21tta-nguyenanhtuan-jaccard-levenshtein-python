@@ -61,16 +61,16 @@
 Sử dụng các ngôn ngữ:
 
 ```bash
-python
+- Python
 ```
 ```bash
-HTML
+- HTML
 ```
 ```bash
-CSS
+- CSS
 ```
 ```bash
-JavaScript
+- JavaScript
 ```
 ## Liên Hệ
 
