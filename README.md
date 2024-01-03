@@ -1,6 +1,6 @@
 # 110121123 - Nguyễn Anh Tuấn - DA21TTA.
 # Tìm hiểu và cài đặt thuật toán đánh giá sự tương đồng văn bản sử dụng độ đo Jaccard và Levenshtein.
-# ------------------------------------------------------------------------------------
+# --------------------------------------------------------------
 # Mô tả đồ án
  ```bash- Tên đề tài: Tìm hiểu và cài đặt thuật toán đánh giá sự tương đồng của văn bản sử dụng độ đo của Jaccard và Levenshtein.
 - Giáo viên hướng dẫn: Nguyễn Nhứt Lam.
