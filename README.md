@@ -31,7 +31,7 @@
 3.	Sau khi cài đặt và thử nghiệm sẽ hiểu rõ nguyên lí hoạt động của 2 thuật toán ta lựa chọn thuật toán phù hợp để làm việc.
 ```
 
-![Ảnh minh họa dự án](https://www.python.org/static/community_logos/python-logo.png)
+![Ảnh minh họa dự án]([https://www.python.org/static/community_logos/python-logo.png](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.bkacad.edu.vn%2F4-li-do-tuyet-voi-de-chon-python-la-ngon-ngu-lap-trinh-dau-tien-nen-hoc-n1335.html&psig=AOvVaw1AeFSnoj2OJkowggQ88lCM&ust=1704393137323000&source=images&cd=vfe&ved=0CBIQjRxqFwoTCKi6oa7twYMDFQAAAAAdAAAAABAR))
 
 ## Mục lục
 - [Lịch Trình Thực Hiện](#lịch-trình-thực-hiện)
